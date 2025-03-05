@@ -13,7 +13,8 @@ export const AuthProvider = ({ children }) => {
       return data;
     } catch (error) {
       console.error('Login failed:', error);
-      throw error;
+      // throw error;
+      return false;
     }
   };
 

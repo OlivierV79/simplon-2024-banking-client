@@ -41,53 +41,61 @@ export default function PaymentMethodList() {
   };
 
   return (
-    <div className="payment-method-list">
-      <h2>Payment Methods</h2>
-      <button className="fab-button" onClick={() => setShowNewForm(true)}>+</button>
-      
-      <div className="payment-methods">
-        {paymentMethods.map(method => (
-          <div key={method.id} className="payment-method-item">
-            <div className="method-content">
-              <div className="method-name">{method.name}</div>
-              <div className="method-digits">**** **** **** {method.lastDigits}</div>
-            </div>
-            <button 
-              className="delete-button"
-              onClick={() => handleDelete(method.id)}
-              aria-label={`Delete ${method.name} payment method`}
-            >
-              🗑️
-            </button>
-          </div>
-        ))}
-      </div>
+      <div className="payment-method-list">
+        <h2>Payment Methods</h2>
+        <p>Here you can view and enter new payment method.</p>
+        <div className="add-entry">
+          <p>To enter a new transaction : </p>
+          <button className="fab-button" onClick={() => setShowNewForm(true)}>+</button>
+        </div>
+        {/*<button className="fab-button" onClick={() => setShowNewForm(true)}>+</button>*/}
 
-      <Modal
-        isOpen={showNewForm}
-        onClose={() => setShowNewForm(false)}
-        title="New Payment Method"
-      >
-        <form onSubmit={handleSubmit} className="payment-method-form">
-          <input
-            type="text"
-            placeholder="Method Name"
-            value={formData.name}
-            onChange={e => setFormData({...formData, name: e.target.value})}
-            required
-          />
-          <input
-            type="text"
-            placeholder="Last 4 Digits"
-            value={formData.lastDigits}
-            pattern="\d{4}"
-            maxLength="4"
-            onChange={e => setFormData({...formData, lastDigits: e.target.value})}
-            required
-          />
-          <button type="submit">Create Payment Method</button>
-        </form>
-      </Modal>
-    </div>
+        {
+          paymentMethods.length === 0 ? <p>There is no payment method yet !</p> :
+
+        <div className="payment-methods">
+          {paymentMethods.map(method => (
+              <div key={method.id} className="payment-method-item">
+                <div className="method-content">
+                  <div className="method-name">{method.name}</div>
+                  <div className="method-digits">**** **** **** {method.lastDigits}</div>
+                </div>
+                <button
+                    className="delete-button"
+                    onClick={() => handleDelete(method.id)}
+                    aria-label={`Delete ${method.name} payment method`}
+                >
+                  🗑️
+                </button>
+              </div>
+          ))}
+        </div>}
+
+        <Modal
+            isOpen={showNewForm}
+            onClose={() => setShowNewForm(false)}
+            title="New Payment Method"
+        >
+          <form onSubmit={handleSubmit} className="payment-method-form">
+            <input
+                type="text"
+                placeholder="Method Name"
+                value={formData.name}
+                onChange={e => setFormData({...formData, name: e.target.value})}
+                required
+            />
+            <input
+                type="text"
+                placeholder="Last 4 Digits"
+                value={formData.lastDigits}
+                pattern="\d{4}"
+                maxLength="4"
+                onChange={e => setFormData({...formData, lastDigits: e.target.value})}
+                required
+            />
+            <button type="submit">Create Payment Method</button>
+          </form>
+        </Modal>
+      </div>
   );
 }
